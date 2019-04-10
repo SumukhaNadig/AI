@@ -1,0 +1,78 @@
+table = {('A','clean','dirty'):'Right and Suck',
+         ('A','dirty','clean'):'Suck',
+         ('A','clean','clean'):'NoOp',
+         ('A','dirty','dirty'):'Suck Right and Suck',
+         ('B','dirty','clean'):'Left and Suck',
+         ('B','clean','dirty'):'Suck',
+         ('B','dirty','dirty'):'Suck Left and Suck',
+         ('B','clean','clean'):'NoOp',
+        }
+
+aseq = []
+bseq = []
+
+def main():
+    pos = input("Enter the position of the agent ")
+    stat = input("Enter status of the location ")
+
+    if pos == 'A':
+        if stat == 'clean':
+            pos = 'B'
+            aseq.append('clean')
+            print("Action is Right")
+            print("Agent is now at position B")
+            stat = input("Enter status of the location ")
+        if stat == 'dirty':
+            pos = 'B'
+            aseq.append('clean')
+            print("Action is Suck and Right")
+            print("Agent is now at position B")
+            stat = input("Enter status of the location ")
+    elif pos == 'B':
+        if stat == 'clean':
+            pos = 'A'
+            bseq.append('clean')
+            print("Action is Left")
+            print("Agent is now at position A")
+            stat = input("Enter status of the location ")
+        if stat == 'dirty':
+            pos = 'A'
+            bseq.append('clean')
+            print("Action is Suck and Left")
+            print("Agent is now at position A")
+            stat = input("Enter status of the location ")
+    while 1:
+        
+        
+        if pos=='A':
+            statA = stat
+            statB = bseq[-1]
+            action = table[(pos,statA,statB)]
+            aseq.append(stat)
+            if 'Right' in action:
+                pos = 'B'
+                aseq.append('clean')
+        else:
+            statA = aseq[-1]
+            statB = stat
+            action = table[(pos,statA,statB)]
+            bseq.append(stat)
+            if 'Left' in action:
+                pos = 'A'
+                bseq.append('clean')
+            
+
+
+        print("Action is "+ action)
+        print("The agent is now at position "+str(pos))
+
+        c = input("Press Y for another input, N to exit ")
+
+        if c == 'N':
+            break
+
+        stat = input("Enter status of the location "+pos+" ")
+
+
+
+main()
